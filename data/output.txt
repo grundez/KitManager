@@ -1,1 +1,7 @@
-Document didnt contains kit
+Kit contains in document!
+Composition:
+Pos	Count	Catalog
+1	1	Drinks
+2	2	Candies
+4	1	Sweets
+5	1	Sweets
