@@ -183,11 +183,13 @@ void KitManager::readKit(const std::string& kitFileName)
 
 void KitManager::outputResult(const std::string& outputFileName, bool isSolved)
 {
-	std::cout << "Check result in output.txt";
+	// TODO fix bag on Linux: result still outputs in catalogs priority hierarchy, ignoring sort by position
+
+	std::cout << "Check result in <source_dir>/data/output.txt" << std::endl;
 	std::ofstream out(outputFileName);
 	if (isSolved) {
 		std::sort(documentItems.begin(), documentItems.end(),
-			[](const DocumentItem& a, const DocumentItem& b) { return a.position < b.position; });
+			[](const DocumentItem& a, const DocumentItem& b) { return a.position < b.position; }); // TODO here is problem
 
 		out << "Kit contains in document!\nComposition:\n";
 		out << "Pos\tCount\tCatalog\n";

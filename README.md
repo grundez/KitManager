@@ -9,14 +9,13 @@
 git clone https://github.com/grundez/KitManager
 cd KitManager
 build.bat
-.\KitManager\KitManager\Release\KitManager.exe
+.\KitManager\Release\KitManager.exe
 ```
 
 **Linux/Mac**
 ```cmd
 git clone https://github.com/grundez/KitManager
 cd KitManager
-build.sh
-cd KitManager
-./KitManager
+./build.sh
+./build/KitManager/KitManager
 ```
