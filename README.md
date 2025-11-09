@@ -16,6 +16,7 @@ build.bat
 ```cmd
 git clone https://github.com/grundez/KitManager
 cd KitManager
+chmod +x build.sh
 ./build.sh
 ./build/KitManager/KitManager
 ```
