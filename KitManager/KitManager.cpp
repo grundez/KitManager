@@ -44,21 +44,24 @@ void KitManager::solution(const std::string& documentFileName, const std::string
 	for (const auto& [catalog, count] : catalogsAvailable) {
 		priorityList.push_back({ catalog, count });
 	}
-	// sorting to make priority by counts
-	std::sort(priorityList.begin(), priorityList.end(), [](const auto& a, const auto& b) { return a.second < b.second; });
+	// sorting first by count, then by names
+	std::sort(priorityList.begin(), priorityList.end(),
+		[](const auto& a, const auto& b) {
+			return a.second != b.second ? a.second < b.second : a.first < b.first;
+		});
 
 
 	/////// MAIN SECTION OF ALOGRITHM
 	bool solvedFlag = true;
 
 	// corner case: check situation then kit didnt contains in document
-	for (const auto& item : kitItems) {
-		if (catalogsAvailable[item.catalog] < item.required) {
+	//for (const auto& item : kitItems) {
+		//if (catalogsAvailable[item.catalog] < item.required) {
 			//std::cout << "Cant reach full kit!" << std::endl;
-			solvedFlag = false;
-			break;
-		}
-	}
+			//solvedFlag = false;
+			//break;
+		//}
+	//}
 
 	// algorithm for building kit
 	for (const auto& [catalog, count] : priorityList) { // iteration in priority vector to close deficit positions
@@ -79,11 +82,7 @@ void KitManager::solution(const std::string& documentFileName, const std::string
 		}
 
 		// if we cant close our needs - so we cant build this kit from document
-		if (remainingNeededKit[catalog] > 0) {
-			//std::cout << "Cant reach full kit!" << std::endl;
-			solvedFlag = false; // didnt solved
-			return;
-		}
+		if (remainingNeededKit[catalog] > 0) solvedFlag = false;	
 	}
 
 	this->outputResult(outputFileName, solvedFlag);
@@ -103,6 +102,9 @@ void KitManager::readDocument(const std::string& documentFileName) {
 	std::getline(document, currentLine); // 1st line header skip
 	while (std::getline(document, currentLine)) {
 		if (currentLine.empty()) continue;
+		if (!currentLine.empty() && currentLine.back() == '\r')
+			currentLine.pop_back();
+
 		std::istringstream sstream(currentLine);
 
 		size_t pos, count;
@@ -155,6 +157,9 @@ void KitManager::readKit(const std::string& kitFileName)
 	std::getline(kit, currentLine); // 1st line header skip
 	while (std::getline(kit, currentLine)) {
 		if (currentLine.empty()) continue;
+		if (!currentLine.empty() && currentLine.back() == '\r')
+			currentLine.pop_back();
+
 		std::istringstream sstream(currentLine);
 
 		std::string catalog;
@@ -181,7 +186,8 @@ void KitManager::outputResult(const std::string& outputFileName, bool isSolved)
 	std::cout << "Check result in output.txt";
 	std::ofstream out(outputFileName);
 	if (isSolved) {
-		std::sort(result.begin(), result.end(), [](const auto& a, const auto& b) {return a.position < b.position;});
+		std::sort(documentItems.begin(), documentItems.end(),
+			[](const DocumentItem& a, const DocumentItem& b) { return a.position < b.position; });
 
 		out << "Kit contains in document!\nComposition:\n";
 		out << "Pos\tCount\tCatalog\n";

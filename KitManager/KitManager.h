@@ -6,6 +6,7 @@
 #include <sstream>
 #include <thread>
 #include <algorithm>
+#include <vector>
 
 // struct for parsing document
 struct DocumentItem {
