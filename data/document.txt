@@ -1,0 +1,7 @@
+Поз.	Кол-во	Каталоги
+1	5	"Drinks"
+2	2	"Sweets","Candies"
+3	1	
+4	1	"Sweets"
+5	1	"Sweets"
+6	1	"Drinks"

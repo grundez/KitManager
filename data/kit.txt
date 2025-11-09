@@ -1,0 +1,4 @@
+Каталог	Кол-во
+"Drinks"	1
+"Candies"	2
+"Sweets"	2
